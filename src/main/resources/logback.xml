@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+	<!-- ch.qos.logback.core.ConsoleAppender 控制台输出 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%thread] %logger{36} -	%msg%n</pattern>
+		</encoder>
+	</appender>
+
+
+	<root level="debug">
+		<appender-ref ref="console" />
+	</root>
+	
+	<logger name="org.apache.ibatis.io" level="INFO" additivity="true" />
+	<logger name="dto" level="INFO" />
+	<logger name="mapper" level="INFO" additivity="true" />
+
+
+
+</configuration>

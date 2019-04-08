@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 给实体类取一个别名，在mapper.xml中就直接使用别名就行 -->
+	<typeAliases>
+		<typeAlias type="com.subGrove.dto.FieldInfoDto" alias="FieldInfoDto"/>
+	</typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC" />
+            <!-- 配置数据库连接信息 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="oracle.jdbc.driver.OracleDriver" />
+                <property name="url" value="jdbc:oracle:thin:@192.168.20.2:1521:motion" />
+                <property name="username" value="kwise" />
+                <property name="password" value="New#12rt" />
+            </dataSource>
+        </environment>
+    </environments>
+    
+    <!-- 注册Mapper.xml文件-->
+    <mappers>
+        <mapper resource="mapper/TableInfoMapper.xml"/>
+    </mappers>
+</configuration>
