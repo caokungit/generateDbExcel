@@ -1,9 +1,11 @@
-package com.subGrove.dto;
+package com.subGrove.vo;
 
 import java.util.List;
 import java.util.Map;
 
-public class TableInfoDto {
+import com.subGrove.vo.list.FieldInfoList;
+
+public class TableInfoSheetVo {
 
     //表名
     private String tableName;
@@ -16,7 +18,7 @@ public class TableInfoDto {
     //普通索引
     private List<Map<String, String>> norKey;
     //字段信息
-    private Map<String, FieldInfoDto> fieldInfo;
+    private List<FieldInfoList> fieldlist;
 
     public String getTableName() {
         return tableName;
@@ -58,12 +60,12 @@ public class TableInfoDto {
         this.norKey = norKey;
     }
 
-    public Map<String, FieldInfoDto> getFieldInfo() {
-        return fieldInfo;
+    public List<FieldInfoList> getFieldlist() {
+        return fieldlist;
     }
 
-    public void setFieldInfo(Map<String, FieldInfoDto> fieldInfo) {
-        this.fieldInfo = fieldInfo;
+    public void setFieldlist(List<FieldInfoList> fieldlist) {
+        this.fieldlist = fieldlist;
     }
 
 }

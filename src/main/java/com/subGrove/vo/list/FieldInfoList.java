@@ -1,11 +1,6 @@
-package com.subGrove.dto;
+package com.subGrove.vo.list;
 
-public class FieldInfoDto {
-
-    //所属表名
-    private String tableName;
-    //所属表描述
-    private String tableCom;
+public class FieldInfoList {
     //字段名
     private String colName;
     //字段描述
@@ -18,30 +13,6 @@ public class FieldInfoDto {
     private String dataDef;
     //必输项
     private String must;
-
-    public String getTableName() {
-        return tableName;
-    }
-
-    public String getMust() {
-        return must;
-    }
-
-    public void setMust(String must) {
-        this.must = must;
-    }
-
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
-
-    public String getTableCom() {
-        return tableCom;
-    }
-
-    public void setTableCom(String tableCom) {
-        this.tableCom = tableCom;
-    }
 
     public String getColName() {
         return colName;
@@ -81,6 +52,14 @@ public class FieldInfoDto {
 
     public void setDataDef(String dataDef) {
         this.dataDef = dataDef;
+    }
+
+    public String getMust() {
+        return must;
+    }
+
+    public void setMust(String must) {
+        this.must = must;
     }
 
 }

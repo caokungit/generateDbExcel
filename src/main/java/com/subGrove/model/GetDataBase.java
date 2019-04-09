@@ -17,6 +17,17 @@ public class GetDataBase {
 
     private static Logger log = LoggerFactory.getLogger(GetDataBase.class);
 
+    public static JSONObject Entire_DataBase;
+
+    static {
+
+        try {
+            Entire_DataBase = getAllFieldInfo();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static JSONObject getAllFieldInfo() throws Exception {
         log.info("-----getAllFieldInfo-----");
         //创建SQL工具
