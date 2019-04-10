@@ -14,9 +14,9 @@ public class TableInfoSheetVo {
     //主键
     private Map<String, String> primaryKey;
     //唯一索引
-    private List<Map<String, String>> uniqueKey;
+    private Map<String, String> uniqueKey;
     //普通索引
-    private List<Map<String, String>> norKey;
+    private Map<String, String> norKey;
     //字段信息
     private List<FieldInfoList> fieldlist;
 
@@ -44,19 +44,19 @@ public class TableInfoSheetVo {
         this.primaryKey = primaryKey;
     }
 
-    public List<Map<String, String>> getUniqueKey() {
+    public Map<String, String> getUniqueKey() {
         return uniqueKey;
     }
 
-    public void setUniqueKey(List<Map<String, String>> uniqueKey) {
+    public void setUniqueKey(Map<String, String> uniqueKey) {
         this.uniqueKey = uniqueKey;
     }
 
-    public List<Map<String, String>> getNorKey() {
+    public Map<String, String> getNorKey() {
         return norKey;
     }
 
-    public void setNorKey(List<Map<String, String>> norKey) {
+    public void setNorKey(Map<String, String> norKey) {
         this.norKey = norKey;
     }
 

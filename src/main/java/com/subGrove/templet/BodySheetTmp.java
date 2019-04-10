@@ -1,74 +1,106 @@
 package com.subGrove.templet;
 
-import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
 
-import com.subGrove.vo.IndexSheetVo;
-import com.subGrove.vo.list.IndexSheetVoList;
+import com.subGrove.vo.TableInfoSheetVo;
 
 public class BodySheetTmp {
 
     private Sheet sheet;
 
-    private int curRow;
+    private int curRowNum;
 
     public BodySheetTmp(Sheet sheet) {
         super();
         this.sheet = sheet;
     }
 
-    public Sheet createSheet(IndexSheetVo sheetVo) {
+    public Sheet createSheet(TableInfoSheetVo sheetVo) {
 
-        this.createNorColStyle();
-        //首行
-        this.createHeadRow();
-
-        //
-        this.createBodyRow(sheetVo);
+        //初始化样式
+        this.initCellStyle();
+        //表信息
+        this.createTableInfo(sheetVo);
+        //表索引
+        this.createIndex(sheetVo);
 
         return this.sheet;
     }
 
-    /**创建通用列样式*/
-    private void createNorColStyle() {
+    /**初始化样式*/
+    private void initCellStyle() {
         //设置列宽
-        sheet.setColumnWidth(0, 256 * 30);
-        sheet.setColumnWidth(1, 256 * 40);
-        sheet.setColumnWidth(2, 256 * 40);
     }
 
-    /**创建头数据*/
-    private void createHeadRow() {
-        //首行
-        Row firstRow = sheet.createRow(curRow++);
-        String firstRowCont[] = { "表名", "表描述", "备注" };
+    /**创建表信息  */
+    private void createTableInfo(TableInfoSheetVo sheetVo) {
+        //表名
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 5));
+        Row curRow = sheet.createRow(curRowNum++);
+        curRow.createCell(0).setCellValue("表名");
+        curRow.createCell(1).setCellValue(sheetVo.getTableName());
 
-        //列-1
-        for (int i = 0; i < firstRowCont.length; i++) {
-            Cell cell = firstRow.createCell(i);
-            cell.setCellValue(firstRowCont[i]);
-        }
+        //表描述
+        sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 5));
+        curRow = sheet.createRow(curRowNum++);
+        curRow.createCell(0).setCellValue("表描述");
+        curRow.createCell(1).setCellValue(sheetVo.getTableCom());
     }
 
-    /**创建正文 */
-    private void createBodyRow(IndexSheetVo sheetVo) {
+    /**创建索引*/
+    private void createIndex(TableInfoSheetVo sheetVo) {
 
-        List<IndexSheetVoList> list = sheetVo.getList();
-        for (IndexSheetVoList unit : list) {
+        int priNum = sheetVo.getPrimaryKey().size();
+        int uniNum = sheetVo.getUniqueKey().size();
+        int norNum = sheetVo.getNorKey().size();
 
-            //创建行
-            Row bodyRow = this.sheet.createRow(curRow++);
-            String bodyRowCont[] = { unit.getTableName(), unit.getTableCom(), unit.getRemark() };
-            //创建列单元
-            for (int i = 0; i < bodyRowCont.length; i++) {
-                Cell cell = bodyRow.createCell(i);
-                cell.setCellValue(bodyRowCont[i]);
+        //主键
+        if (priNum > 0) {
+            Map<String, String> priMap = sheetVo.getPrimaryKey();
+            Set<Entry<String, String>> entrySet = priMap.entrySet();
+            for (Entry<String, String> entry : entrySet) {
+                sheet.addMergedRegion(new CellRangeAddress(curRowNum + 1, curRowNum + 1, 1, 3));
+                sheet.addMergedRegion(new CellRangeAddress(curRowNum + 1, curRowNum + 1, 4, 5));
+                Row curRow = sheet.createRow(curRowNum++);
+                curRow.createCell(0).setCellValue("主键");
+                curRow.createCell(1).setCellValue(entry.getKey());
+                curRow.createCell(3).setCellValue(entry.getValue());
             }
         }
 
+        //唯一索引
+        if (uniNum > 0) {
+            Map<String, String> priMap = sheetVo.getUniqueKey();
+            Set<Entry<String, String>> entrySet = priMap.entrySet();
+            for (Entry<String, String> entry : entrySet) {
+                sheet.addMergedRegion(new CellRangeAddress(curRowNum + 1, curRowNum + 1, 1, 3));
+                sheet.addMergedRegion(new CellRangeAddress(curRowNum + 1, curRowNum + 1, 4, 5));
+                Row curRow = sheet.createRow(curRowNum++);
+                curRow.createCell(0).setCellValue("唯一索引");
+                curRow.createCell(1).setCellValue(entry.getKey());
+                curRow.createCell(3).setCellValue(entry.getValue());
+            }
+        }
+
+        //索引
+        if (norNum > 0) {
+            Map<String, String> priMap = sheetVo.getNorKey();
+            Set<Entry<String, String>> entrySet = priMap.entrySet();
+            for (Entry<String, String> entry : entrySet) {
+                sheet.addMergedRegion(new CellRangeAddress(curRowNum + 1, curRowNum + 1, 1, 3));
+                sheet.addMergedRegion(new CellRangeAddress(curRowNum + 1, curRowNum + 1, 4, 5));
+                Row curRow = sheet.createRow(curRowNum++);
+                curRow.createCell(0).setCellValue("索引");
+                curRow.createCell(1).setCellValue(entry.getKey());
+                curRow.createCell(3).setCellValue(entry.getValue());
+            }
+        }
     }
 
     public Sheet getSheet() {

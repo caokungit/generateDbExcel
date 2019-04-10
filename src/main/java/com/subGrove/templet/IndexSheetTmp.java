@@ -45,7 +45,6 @@ public class IndexSheetTmp {
         sheet.setColumnWidth(0, 256 * 30);
         sheet.setColumnWidth(1, 256 * 40);
         sheet.setColumnWidth(2, 256 * 40);
-
     }
 
     /**创建头数据*/
@@ -100,6 +99,9 @@ public class IndexSheetTmp {
     private void createBodyRow(IndexSheetVo sheetVo) {
 
         List<IndexSheetVoList> list = sheetVo.getList();
+
+        int lastBodyNo = list.size() + curRowNum;
+
         for (IndexSheetVoList unit : list) {
 
             //创建行
@@ -108,7 +110,21 @@ public class IndexSheetTmp {
             //创建列单元
             for (int i = 0; i < bodyRowCont.length; i++) {
                 Cell cell = bodyRow.createCell(i);
+                /**===============  数据操作  ===============**/
                 cell.setCellValue(bodyRowCont[i]);
+                /**===============  样式操作  ===============**/
+                if (i < bodyRowCont.length - 1 && curRowNum < lastBodyNo) {
+                    cell.setCellStyle(this.createCellStyle("style4"));
+                }
+                if (i == bodyRowCont.length - 1 && curRowNum < lastBodyNo) {
+                    cell.setCellStyle(this.createCellStyle("style5"));
+                }
+                if (i < bodyRowCont.length - 1 && curRowNum == lastBodyNo) {
+                    cell.setCellStyle(this.createCellStyle("style2"));
+                }
+                if (i == bodyRowCont.length - 1 && curRowNum == lastBodyNo) {
+                    cell.setCellStyle(this.createCellStyle("style3"));
+                }
             }
         }
 
@@ -117,7 +133,7 @@ public class IndexSheetTmp {
     private CellStyle createCellStyle(String type) {
 
         CellStyle style = styleMap.get(type);
-        if (style != null) {
+        if (style != null && styleMap.size() > 1000000) {
             return style;
         } else {
             style = sheet.getWorkbook().createCellStyle();
@@ -125,15 +141,22 @@ public class IndexSheetTmp {
         }
 
         switch (type) {
-        case "style1":
+        case "style1"://右边粗边框
             style.setBorderRight(CellStyle.BORDER_MEDIUM);
             break;
-        case "style2":
+        case "style2"://下边粗边框
             style.setBorderBottom(CellStyle.BORDER_MEDIUM);
             break;
-        case "style3":
+        case "style3"://右下角粗边框
             style.setBorderRight(CellStyle.BORDER_MEDIUM);
             style.setBorderBottom(CellStyle.BORDER_MEDIUM);
+            break;
+        case "style4"://下边虚边框
+            style.setBorderBottom(CellStyle.BORDER_HAIR);
+            break;
+        case "style5"://下边虚边框,右边粗边框
+            style.setBorderBottom(CellStyle.BORDER_HAIR);
+            style.setBorderRight(CellStyle.BORDER_MEDIUM);
             break;
         default:
         }

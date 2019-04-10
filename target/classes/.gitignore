@@ -1,2 +1,6 @@
+/META-INF/
 /com/
+/generatorConfig.xml
+/logback.xml
 /mapper/
+/mybatis-config.xml
