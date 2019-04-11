@@ -17,18 +17,10 @@ public class FieldInfoDto {
     //默认值
     private String dataDef;
     //必输项
-    private String must;
+    private String nullAble;
 
     public String getTableName() {
         return tableName;
-    }
-
-    public String getMust() {
-        return must;
-    }
-
-    public void setMust(String must) {
-        this.must = must;
     }
 
     public void setTableName(String tableName) {
@@ -81,6 +73,14 @@ public class FieldInfoDto {
 
     public void setDataDef(String dataDef) {
         this.dataDef = dataDef;
+    }
+
+    public String getNullAble() {
+        return nullAble;
+    }
+
+    public void setNullAble(String nullAble) {
+        this.nullAble = nullAble;
     }
 
 }

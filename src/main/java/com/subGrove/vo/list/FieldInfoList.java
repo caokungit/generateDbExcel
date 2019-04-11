@@ -13,6 +13,10 @@ public class FieldInfoList {
     private String dataDef;
     //必输项
     private String must;
+    //备注
+    private String remark;
+    //手动批注
+    private String anno;
 
     public String getColName() {
         return colName;
@@ -60,6 +64,22 @@ public class FieldInfoList {
 
     public void setMust(String must) {
         this.must = must;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getAnno() {
+        return anno;
+    }
+
+    public void setAnno(String anno) {
+        this.anno = anno;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.subGrove.vo;
 
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.subGrove.vo.list.FieldInfoList;
@@ -12,13 +12,13 @@ public class TableInfoSheetVo {
     //表描述
     private String tableCom;
     //主键
-    private Map<String, String> primaryKey;
+    private Map<String, String> primaryKey = new LinkedHashMap<>();
     //唯一索引
-    private Map<String, String> uniqueKey;
+    private Map<String, String> uniqueKey = new LinkedHashMap<>();
     //普通索引
-    private Map<String, String> norKey;
+    private Map<String, String> norKey = new LinkedHashMap<>();
     //字段信息
-    private List<FieldInfoList> fieldlist;
+    private Map<String, FieldInfoList> fieldInfo;
 
     public String getTableName() {
         return tableName;
@@ -60,12 +60,12 @@ public class TableInfoSheetVo {
         this.norKey = norKey;
     }
 
-    public List<FieldInfoList> getFieldlist() {
-        return fieldlist;
+    public Map<String, FieldInfoList> getFieldInfo() {
+        return fieldInfo;
     }
 
-    public void setFieldlist(List<FieldInfoList> fieldlist) {
-        this.fieldlist = fieldlist;
+    public void setFieldInfo(Map<String, FieldInfoList> fieldInfo) {
+        this.fieldInfo = fieldInfo;
     }
 
 }

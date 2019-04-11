@@ -10,7 +10,8 @@
 		t3.comments tableCom,
 		t1.Column_Name colName,
 		t2.Comments colCom,
-		t1.DATA_TYPE || '(' || t1.DATA_LENGTH || ')' AS dataType,
+		t1.DATA_TYPE dataType,
+		t1.DATA_LENGTH length,
 		t1.NullAble nullAble
 		FROM cols t1
 		LEFT JOIN user_col_comments t2
@@ -26,7 +27,7 @@
 		AND t4.Temporary = 'Y'
 		AND t4.Object_Name = t1.Table_Name) and not regexp_like(t1.TABLE_NAME,
 		'[=]')  
-		 and lower(t1.table_name) in ('t1_cust_info','th_cust_trans_log')
+		and lower(t1.table_name) in ('t1_cust_info','th_cust_trans_log')
 		ORDER BY t1.Table_Name, t1.Column_ID
 	</select>
 

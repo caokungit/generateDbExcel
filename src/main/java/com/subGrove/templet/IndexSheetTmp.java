@@ -152,7 +152,9 @@ public class IndexSheetTmp {
             style.setBorderBottom(CellStyle.BORDER_MEDIUM);
             break;
         case "style4"://下边虚边框
-            style.setBorderBottom(CellStyle.BORDER_HAIR);
+            short c = getCount();
+            System.out.println(c);
+            style.setBorderBottom(c);
             break;
         case "style5"://下边虚边框,右边粗边框
             style.setBorderBottom(CellStyle.BORDER_HAIR);
@@ -161,6 +163,17 @@ public class IndexSheetTmp {
         default:
         }
         return style;
+    }
+
+    private short count;
+
+    private short getCount() {
+        if (count > 27) {
+            count = 0;
+        }
+
+        int ret = count++ / 2;
+        return (short) ret;
     }
 
     public Sheet getSheet() {

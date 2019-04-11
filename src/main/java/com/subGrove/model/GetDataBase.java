@@ -1,6 +1,6 @@
 package com.subGrove.model;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +17,10 @@ public class GetDataBase {
 
     private static Logger log = LoggerFactory.getLogger(GetDataBase.class);
 
+    /**
+     * key:String : 表名
+     * valeu:TableInfoDto : 表字段信息
+     * */
     public static JSONObject Entire_DataBase;
 
     static {
@@ -54,7 +58,7 @@ public class GetDataBase {
             String fieldName = field.getColName();
             Map<String, FieldInfoDto> fieldInfo = tableInfo.getFieldInfo();
             if (fieldInfo == null) {
-                fieldInfo = new HashMap<>();
+                fieldInfo = new LinkedHashMap<>();
             }
 
             fieldInfo.put(fieldName, field);
