@@ -6,9 +6,12 @@ import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFHyperlink;
 
 import com.subGrove.vo.IndexSheetVo;
 import com.subGrove.vo.list.IndexSheetVoList;
@@ -125,9 +128,17 @@ public class IndexSheetTmp {
                 if (i == bodyRowCont.length - 1 && curRowNum == lastBodyNo) {
                     cell.setCellStyle(this.createCellStyle("style3"));
                 }
+                /**===============  创建超链接  ===============**/
+                if (i == 0) {
+                    CreationHelper createHelper = this.sheet.getWorkbook().getCreationHelper();
+                    XSSFHyperlink link = (XSSFHyperlink) createHelper
+                            .createHyperlink(Hyperlink.LINK_DOCUMENT);
+                    link.setAddress("#" + unit.getTableName() + "!A1");
+                    System.out.println(link.getAddress());
+                    cell.setHyperlink(link);
+                }
             }
         }
-
     }
 
     private CellStyle createCellStyle(String type) {
@@ -152,9 +163,7 @@ public class IndexSheetTmp {
             style.setBorderBottom(CellStyle.BORDER_MEDIUM);
             break;
         case "style4"://下边虚边框
-            short c = getCount();
-            System.out.println(c);
-            style.setBorderBottom(c);
+            style.setBorderBottom(CellStyle.BORDER_HAIR);
             break;
         case "style5"://下边虚边框,右边粗边框
             style.setBorderBottom(CellStyle.BORDER_HAIR);
@@ -163,17 +172,6 @@ public class IndexSheetTmp {
         default:
         }
         return style;
-    }
-
-    private short count;
-
-    private short getCount() {
-        if (count > 27) {
-            count = 0;
-        }
-
-        int ret = count++ / 2;
-        return (short) ret;
     }
 
     public Sheet getSheet() {

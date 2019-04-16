@@ -3,6 +3,7 @@
 <mapper namespace="com.subGrove.mapper.TableInfoMapper">
 
 	<resultMap id="FieldInfoDto" type="com.subGrove.dto.FieldInfoDto" />
+	<resultMap id="IndexInfoDto" type="com.subGrove.dto.IndexInfoDto" />
 	
 	<select id="selectAllTable" resultMap="FieldInfoDto">
 		SELECT
@@ -27,8 +28,34 @@
 		AND t4.Temporary = 'Y'
 		AND t4.Object_Name = t1.Table_Name) and not regexp_like(t1.TABLE_NAME,
 		'[=]')  
-		and lower(t1.table_name) in ('t1_cust_info','th_cust_trans_log')
+		<!-- and lower(t1.table_name) in ('t1_cust_info','th_cust_trans_log') -->
 		ORDER BY t1.Table_Name, t1.Column_ID
+	</select>
+	
+	<select id="selectAllIndex" resultMap="IndexInfoDto">
+				select i.index_name indexName, i.table_name tableName, T.index_col indexCol,
+		       case
+		         when i.uniqueness = 'NONUNIQUE' then
+		          '03'
+		         when i.uniqueness = 'UNIQUE' and c.table_name is null then
+		          '02'
+		         when i.uniqueness = 'UNIQUE' and c.table_name is not null then
+		          '01'
+		         else
+		          '04'
+		       end type
+		  from user_indexes i
+		  left join user_constraints c
+		    on i.table_name = c.table_name
+		   and i.index_name = c.index_name
+		  left join (select c.TABLE_NAME, c.INDEX_NAME,
+		                    wm_concat(c.COLUMN_NAME) index_col
+		               from user_ind_columns c
+		              group by c.TABLE_NAME, c.INDEX_NAME) T
+		    on T.table_name = i.table_name
+		   and T.index_name = i.index_name
+		   <!-- where lower(i.table_name) in ('t1_cust_info','th_cust_trans_log') -->
+		   order by type
 	</select>
 
 </mapper>

@@ -41,10 +41,11 @@ public class GenerateDb {
             indexSheetTmp.createSheet(indexSheetVo);
 
             //创建每个表详情
+            int i = 3;
             for (TableInfoSheetVo tableInfo : sheetVos) {
 
                 Sheet bodySheet = excelUtil.createNewSheet(tableInfo.getTableName());
-                BodySheetTmp bodySheetTmp = new BodySheetTmp(bodySheet);
+                BodySheetTmp bodySheetTmp = new BodySheetTmp(bodySheet, ++i);
                 bodySheetTmp.createSheet(tableInfo);
             }
 
