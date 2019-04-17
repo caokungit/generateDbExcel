@@ -8,6 +8,7 @@ import java.util.Set;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
@@ -95,8 +96,8 @@ public class BodySheetTmp {
         CreationHelper createHelper = this.sheet.getWorkbook().getCreationHelper();
         XSSFHyperlink link = (XSSFHyperlink) createHelper.createHyperlink(Hyperlink.LINK_DOCUMENT);
         link.setAddress("#目录!A" + this.forIndexLine);
-        System.out.println(link.getAddress());
         Cell hypeCell = this.sheet.getRow(0).createCell(title.length);
+        hypeCell.setCellStyle(this.createStyle("", "", "hypeLink"));
         hypeCell.setCellValue("返回");
         hypeCell.setHyperlink(link);
     }
@@ -132,11 +133,11 @@ public class BodySheetTmp {
             switch (unit.getType()) {
             case "01":
                 cell.setCellValue("主键");
-                cell.setCellStyle(this.createStyle("border1", "color1", ""));
+                cell.setCellStyle(this.createStyle("border1", "color3", ""));
                 break;
             case "02":
                 cell.setCellValue("唯一索引");
-                cell.setCellStyle(this.createStyle("border1", "color1", ""));
+                cell.setCellStyle(this.createStyle("border1", "color2", ""));
                 break;
             case "03":
                 cell.setCellValue("索引");
@@ -219,7 +220,7 @@ public class BodySheetTmp {
         String styleStr = borderSty + colorSty + other;
 
         CellStyle style = styleMap.get(styleStr);
-        if (style != null && styleMap.size() > 1000000) {
+        if (style != null) {
             return style;
         } else {
             style = sheet.getWorkbook().createCellStyle();
@@ -238,6 +239,14 @@ public class BodySheetTmp {
         switch (type) {
         case "color1"://浅灰色
             style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+            style.setFillPattern((short) 1);
+            break;
+        case "color2"://浅灰色
+            style.setFillForegroundColor(IndexedColors.GREY_40_PERCENT.getIndex());
+            style.setFillPattern((short) 1);
+            break;
+        case "color3"://浅灰色
+            style.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
             style.setFillPattern((short) 1);
             break;
         default:
@@ -288,6 +297,13 @@ public class BodySheetTmp {
         switch (type) {
         case "AutoLine":
             style.setWrapText(true);
+            break;
+        case "hypeLink":
+            Font font = this.sheet.getWorkbook().createFont();
+            font.setColor(IndexedColors.BLUE.index);
+            font.setUnderline(Font.U_SINGLE);
+            font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            style.setFont(font);
             break;
         default:
             break;

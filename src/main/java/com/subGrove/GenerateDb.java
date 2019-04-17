@@ -6,8 +6,9 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Sheet;
 
-import com.subGrove.inter.GetBodyData;
-import com.subGrove.inter.GetIndexData;
+import com.subGrove.inter.GetBodyDataImpl;
+import com.subGrove.inter.GetIgnoreImpl;
+import com.subGrove.inter.GetIndexDataImpl;
 import com.subGrove.model.ExcelUtil;
 import com.subGrove.templet.BodySheetTmp;
 import com.subGrove.templet.IndexSheetTmp;
@@ -19,11 +20,11 @@ public class GenerateDb {
     public static void main(String[] args) throws Exception {
 
         //获取目录数据
-        GetIndexData getIndexData = new GetIndexData();
+        GetIndexDataImpl getIndexData = new GetIndexDataImpl();
         IndexSheetVo indexSheetVo = getIndexData.getIndexData();
 
         //获取表数据
-        GetBodyData getBodyData = new GetBodyData();
+        GetBodyDataImpl getBodyData = new GetBodyDataImpl();
         List<TableInfoSheetVo> sheetVos = getBodyData.getBodyData();
 
         createView(indexSheetVo, sheetVos);
@@ -45,6 +46,10 @@ public class GenerateDb {
             for (TableInfoSheetVo tableInfo : sheetVos) {
 
                 Sheet bodySheet = excelUtil.createNewSheet(tableInfo.getTableName());
+                if (GetIgnoreImpl.Entire_Ignore.contains(tableInfo.getTableName().toUpperCase())) {
+                    bodySheet.getWorkbook().setSheetHidden(i - 2, true);
+                }
+
                 BodySheetTmp bodySheetTmp = new BodySheetTmp(bodySheet, ++i);
                 bodySheetTmp.createSheet(tableInfo);
             }

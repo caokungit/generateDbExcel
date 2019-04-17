@@ -16,7 +16,7 @@ import com.subGrove.vo.list.IndexSheetVoList;
  * 创建人 : caokun
  * 创建日期 : 2019年4月9日
  */
-public class GetIndexData {
+public class GetIndexDataImpl {
 
     public IndexSheetVo getIndexData() {
 

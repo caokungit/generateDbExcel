@@ -13,11 +13,11 @@ public class MybatisUtil {
     private SqlSession session;
 
     public MybatisUtil() throws IOException {
-        // ¶ÁÈ¡MybatisµÄÅäÖÃÎÄ¼ş,Í¬Ê±ËüÒ²»áÈ¥¶ÁÈ¡¹ØÁªµÄmapperÎÄ¼ş
+        // è¯»å–Mybatisçš„é…ç½®æ–‡ä»¶,åŒæ—¶å®ƒä¹Ÿä¼šå»è¯»å–å…³è”çš„mapperæ–‡ä»¶
         Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
-        // µÃµ½»á»°session¹¤³§
+        // å¾—åˆ°ä¼šè¯sessionå·¥å‚
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader);
-        // µÃµ½»á»°
+        // å¾—åˆ°ä¼šè¯
         this.session = factory.openSession();
     }
 

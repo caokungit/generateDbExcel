@@ -21,7 +21,7 @@ import com.subGrove.vo.list.FieldInfoList;
  * 创建人 : caokun
  * 创建日期 : 2019年4月11日
  */
-public class GetBodyData {
+public class GetBodyDataImpl {
 
     public List<TableInfoSheetVo> getBodyData() {
 
